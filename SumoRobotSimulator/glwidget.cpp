@@ -51,13 +51,15 @@
 #include "glwidget.h"
 #include "mainwindow.h"
 
+float RobotSize = 0.1;
+
 //! [0]
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
 {
     QTimer *timer1 = new QTimer(this);
     connect(timer1, SIGNAL(timeout()), this, SLOT(update()));
-    timer1->start(100);
+    timer1->start(10);
 
 }
 //! [0]
@@ -90,20 +92,18 @@ void GLWidget::paintGL(){
     glPopMatrix();
 
     glColor3f(0,0,1);
-
-    glBegin(GL_QUADS);
-    glVertex2f(0.0f, 0.0f);
-    glVertex2f(0.1f, 0.0f);
-    glVertex2f(0.1f, -0.1f);
-    glVertex2f(0.0f, -0.1f);
-    glEnd();
+    drawRobot(mainRobot);
+    glColor3f(0,1,0);
+    drawRobot(enemyRobot);
    // glTranslatef(move,0,0);
 
 
-    //glRotatef(angle,0,0,1);
+   // glRotatef(45,0,0,1);
     glFlush();
 
     //angle+=0.5;
+    mainRobot.Update();
+    enemyRobot.Update();
 
 }
 
@@ -124,5 +124,15 @@ void GLWidget::drawCircle(float cx, float cy, float r, int segmentsNumber){
             glVertex2f(x + cx, y + cy);//output vertex
 
         }
+    glEnd();
+}
+
+void GLWidget::drawRobot(Robot r)
+{
+    glBegin(GL_QUADS);
+    glVertex2f(r.GetX() - RobotSize, r.GetY() - RobotSize);
+    glVertex2f(r.GetX() + RobotSize, r.GetY() - RobotSize);
+    glVertex2f(r.GetX() + RobotSize, r.GetY() + RobotSize);
+    glVertex2f(r.GetX() - RobotSize, r.GetY() + RobotSize);
     glEnd();
 }

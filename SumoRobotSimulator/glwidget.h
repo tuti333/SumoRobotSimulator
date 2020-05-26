@@ -54,12 +54,16 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <math.h>
+#include "robot.h"
 //! [0]
 
 
 class GLWidget : public QOpenGLWidget
 {
     Q_OBJECT
+private:
+    Robot mainRobot  = Robot(0.0,-0.5, 0);
+    Robot enemyRobot = Robot(0.0, 0.5, 180);
 
 public:
     GLWidget(QWidget *parent);
@@ -68,6 +72,7 @@ public:
     void paintGL() override;
     void resizeGL(int w, int h) override;
     void drawCircle(float cx, float cy, float r, int segmentsNumber);
+    void drawRobot(Robot r);
 
 };
 //! [0]

@@ -7,6 +7,7 @@
 
 enum State  {READY, START, STOP};
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
